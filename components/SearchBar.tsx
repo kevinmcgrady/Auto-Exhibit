@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { SearchButton } from '@/components';
+import { updateQueryParams } from '@/utils';
 
 const SearchBar = () => {
   const router = useRouter();
@@ -16,27 +17,11 @@ const SearchBar = () => {
 
     if (manufacturer === '' && model === '') return;
 
-    updateSearchParams(model.toLowerCase(), manufacturer.toLowerCase());
-  };
-
-  const updateSearchParams = (model: string, manufacturer: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    if (model) {
-      searchParams.set('model', model);
-    } else {
-      searchParams.delete('model');
-    }
-
-    if (manufacturer) {
-      searchParams.set('manufacturer', manufacturer);
-    } else {
-      searchParams.delete('manufacturer');
-    }
-
-    const newPathName = `${
-      window.location.pathname
-    }?${searchParams.toString()}`;
-    router.push(newPathName);
+    const newPathname = updateQueryParams(
+      model.toLowerCase(),
+      manufacturer.toLowerCase(),
+    );
+    router.push(newPathname);
   };
 
   return (

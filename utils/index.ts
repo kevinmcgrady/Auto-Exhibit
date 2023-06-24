@@ -5,7 +5,7 @@ import axios from 'axios';
 export async function fetchCars({
   fuel = '',
   limit = 10,
-  manufacturer = 'Volkswagen',
+  manufacturer = '',
   model = '',
   year = 2000,
 }: Filters) {
@@ -13,6 +13,7 @@ export async function fetchCars({
     method: 'GET',
     url: 'https://cars-by-api-ninjas.p.rapidapi.com/v1/cars',
     params: { fuel_type: fuel, limit, make: manufacturer, model, year },
+
     headers: {
       'X-RapidAPI-Key': process.env.API_KEY,
       'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
@@ -63,4 +64,35 @@ export const updateSearchParams = (type: string, value: string) => {
   const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
 
   return newPathname;
+};
+
+export const updateQueryParams = (model: string, manufacturer: string) => {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  if (model) {
+    searchParams.set('model', model);
+  } else {
+    searchParams.delete('model');
+  }
+
+  if (manufacturer) {
+    searchParams.set('manufacturer', manufacturer);
+  } else {
+    searchParams.delete('manufacturer');
+  }
+
+  const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
+
+  return newPathname;
+};
+
+export const filterManufacturers = (query: string, manufacturers: string[]) => {
+  return query === ''
+    ? manufacturers
+    : manufacturers.filter((manufacturer) =>
+        manufacturer
+          .toLowerCase()
+          .replace(/\s+/g, '')
+          .includes(query.toLowerCase().replace(/\s+/g, '')),
+      );
 };

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Combobox, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { manufacturers } from '@/constants';
+import { filterManufacturers } from '@/utils';
 
 type SearchManufacturerProps = {
   manufacturer: string;
@@ -16,15 +17,7 @@ const SearchManufacturer = ({
 }: SearchManufacturerProps) => {
   const [query, setQuery] = useState<string>('');
 
-  const filteredManufacturers =
-    query === ''
-      ? manufacturers
-      : manufacturers.filter((manufacturer) =>
-          manufacturer
-            .toLowerCase()
-            .replace(/\s+/g, '')
-            .includes(query.toLowerCase().replace(/\s+/g, '')),
-        );
+  const filteredManufacturers = filterManufacturers(query, manufacturers);
 
   return (
     <div className='search-manufacturer'>
@@ -63,7 +56,7 @@ const SearchManufacturer = ({
                     }`
                   }
                 >
-                  {({ selected, active }) => (
+                  {({ selected }) => (
                     <>
                       <span
                         className={`block truncate ${
