@@ -3,12 +3,10 @@
 import { SearchManufacturer } from '@/components';
 import { useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { SearchButton } from '@/components';
 import { updateQueryParams } from '@/utils';
 
 const SearchBar = () => {
-  const router = useRouter();
   const [manufacturer, setManufacturer] = useState<string>('');
   const [model, setModel] = useState<string>('');
 
@@ -21,7 +19,8 @@ const SearchBar = () => {
       model.toLowerCase(),
       manufacturer.toLowerCase(),
     );
-    router.push(newPathname);
+
+    window.location.replace(newPathname);
   };
 
   return (

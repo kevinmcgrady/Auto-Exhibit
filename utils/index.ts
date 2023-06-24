@@ -1,6 +1,5 @@
 import { Car } from '@/types/car';
 import { Filters } from '@/types/filters';
-import axios from 'axios';
 
 export async function fetchCars({
   fuel = '',
@@ -9,22 +8,20 @@ export async function fetchCars({
   model = '',
   year = 2000,
 }: Filters) {
-  const options = {
-    method: 'GET',
-    url: 'https://cars-by-api-ninjas.p.rapidapi.com/v1/cars',
-    params: { fuel_type: fuel, limit, make: manufacturer, model, year },
-
-    headers: {
-      'X-RapidAPI-Key': process.env.API_KEY,
-      'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
-    },
+  const headers: HeadersInit = {
+    'X-RapidAPI-Key': process.env.API_KEY || '',
+    'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
   };
 
   try {
-    const response = await axios.request<Car[]>(options);
-    return response.data;
+    const response = await fetch(
+      `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
+      { headers: headers, cache: 'no-store' },
+    );
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error(error);
+    throw new Error('Something went wrong');
   }
 }
 
