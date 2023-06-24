@@ -1,7 +1,4 @@
-'use client';
-
 import Image from 'next/image';
-import { Button } from '@/components';
 
 const Hero = () => {
   return (
@@ -14,10 +11,6 @@ const Hero = () => {
           Streamline your car rental experience with our effortless booking
           process.
         </p>
-        <Button
-          title='Explore Card'
-          containerStyles='bg-primary-blue text-white rounded-full mt-10'
-        />
       </div>
       <div className='hero__image-container'>
         <div className='hero__image'>
@@ -26,6 +19,7 @@ const Hero = () => {
             alt='car with blue background'
             fill
             className='object-contain'
+            priority
           />
         </div>
         <div className='hero__image-overlay' />
