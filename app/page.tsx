@@ -21,7 +21,7 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
         <div className='home__filters'>
           <SearchBar />
-          <div className='home__filter-container'>
+          <div className='home__filter-container max-sm:w-full'>
             <Filter title='fuel' options={fuels} />
             <Filter title='year' options={yearsOfProduction} />
           </div>

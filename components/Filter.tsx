@@ -23,7 +23,7 @@ const Filter = ({ title, options }: FilterProps) => {
   };
 
   return (
-    <div className='w-fit'>
+    <div className='w-1/2'>
       <Listbox
         value={selected}
         onChange={(e) => {
@@ -31,7 +31,7 @@ const Filter = ({ title, options }: FilterProps) => {
           handleUpdateParams(e);
         }}
       >
-        <div className='relative w-fit z-10'>
+        <div className='relative w-full z-10'>
           <Listbox.Button className='custom-filter__btn'>
             <span className='block truncate'>{selected.title}</span>
             <Image
