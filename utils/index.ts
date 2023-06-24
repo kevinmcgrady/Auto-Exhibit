@@ -12,7 +12,7 @@ export async function fetchCars({
   const options = {
     method: 'GET',
     url: 'https://cars-by-api-ninjas.p.rapidapi.com/v1/cars',
-    params: { fuel, limit, make: manufacturer, model, year },
+    params: { fuel_type: fuel, limit, make: manufacturer, model, year },
     headers: {
       'X-RapidAPI-Key': process.env.API_KEY,
       'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
@@ -54,4 +54,13 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
   const rentalRatePerDay = basePricePerDay + mileageRate + ageRate;
 
   return rentalRatePerDay.toFixed(0);
+};
+
+export const updateSearchParams = (type: string, value: string) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.set(type, value);
+
+  const newPathname = `${window.location.pathname}?${searchParams.toString()}`;
+
+  return newPathname;
 };
