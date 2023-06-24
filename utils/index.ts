@@ -5,14 +5,14 @@ import axios from 'axios';
 export async function fetchCars({
   fuel = '',
   limit = 10,
-  manufacturer = 'volkswagen',
-  model = 'golf',
+  manufacturer = 'Volkswagen',
+  model = '',
   year = 2000,
 }: Filters) {
   const options = {
     method: 'GET',
     url: 'https://cars-by-api-ninjas.p.rapidapi.com/v1/cars',
-    params: { fuel, limit, manufacturer, model, year },
+    params: { fuel, limit, make: manufacturer, model, year },
     headers: {
       'X-RapidAPI-Key': process.env.API_KEY,
       'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com',
@@ -20,7 +20,7 @@ export async function fetchCars({
   };
 
   try {
-    const response = await axios.request(options);
+    const response = await axios.request<Car[]>(options);
     return response.data;
   } catch (error) {
     console.error(error);
