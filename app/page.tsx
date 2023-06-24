@@ -1,4 +1,4 @@
-import { Hero, SearchBar, Filter, CarCard } from '@/components';
+import { Hero, SearchBar, Filter, CarCard, ShowMore } from '@/components';
 import { fuels, yearsOfProduction } from '@/constants';
 import { Filters } from '@/types/filters';
 import { fetchCars } from '@/utils';
@@ -6,6 +6,7 @@ import { fetchCars } from '@/utils';
 type PageProps = {
   searchParams: Filters;
 };
+
 export default async function Home({ searchParams }: PageProps) {
   const allCars = await fetchCars(searchParams);
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
@@ -32,6 +33,10 @@ export default async function Home({ searchParams }: PageProps) {
                 <CarCard key={car.model} car={car} />
               ))}
             </div>
+            <ShowMore
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={(searchParams.limit || 10) > allCars.length}
+            />
           </section>
         ) : (
           <div className='home__error-container'>
